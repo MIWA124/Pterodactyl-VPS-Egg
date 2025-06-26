@@ -11,7 +11,7 @@ declare -A colors=(
 
 # Configuration variables
 readonly ROOTFS_DIR="/home/container"
-readonly BASE_URL="https://fra1lxdmirror01.do.letsbuildthe.cloud/images/"
+readonly BASE_URL="https://fra1lxdmirror01.do.letsbuildthe.cloud/images"
 
 # Add to PATH
 export PATH=$PATH:~/.local/usr/bin
