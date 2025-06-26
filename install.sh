@@ -113,11 +113,16 @@ install() {
     fi
     
     # Fetch available versions with error handling
-    image_names=$(curl -A "Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:24.0) Gecko/20100101 Firefox/24.0"  -L -X GET  -s "$url_path" | grep 'href="' | grep -o '"[^/"]*/"' | tr -d '"/') ||
+    image_names=$(curl -A "Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:24.0) Gecko/20100101 Firefox/24.0" -L -X GET -s "$url_path" | grep 'href="' | grep -o '"[^/"]*/"' | tr -d '"/') ||
     error_exit "Failed to fetch available versions for $pretty_name"
+
+    # Properly split into array while preserving spaces in version names
+    local -a versions=()
+    while IFS= read -r line; do
+        [[ -n "$line" ]] && versions+=("$line")
+    done <<< "$image_names"
     
     # Display available versions
-    local -a versions=($image_names)
     for i in "${!versions[@]}"; do
         printf "* [%d] %s (%s)\n" $((i + 1)) "$pretty_name" "${versions[i]}"
     done
@@ -126,7 +131,7 @@ install() {
     # Version selection with validation
     local version
     while true; do
-        printf "${colors[YELLOW]}Enter the desired version (0-${#versions[@]}): ${colors[NC]}\n"
+        printf "${colors[YELLOW]}Enter the desired version (0-%d): ${colors[NC]}\n" "${#versions[@]}"
         read -r version
         if [[ "$version" == "0" ]]; then
             exec "$0"
