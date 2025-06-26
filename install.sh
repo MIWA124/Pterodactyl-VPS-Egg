@@ -86,12 +86,7 @@ detect_architecture() {
     esac
 }
 
-# Verify network connectivity
-check_network() {
-    if ! curl -s --head "$BASE_URL" >/dev/null; then
-        error_exit "Unable to connect to $BASE_URL. Please check your internet connection."
-    fi
-}
+
 
 # Function to cleanup temporary files
 cleanup() {
