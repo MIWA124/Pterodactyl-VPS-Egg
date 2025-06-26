@@ -114,15 +114,15 @@ install() {
     
     # Fetch available versions with error handling
     image_names=$(curl -A "Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:24.0) Gecko/20100101 Firefox/24.0" -L -X GET -s "$url_path" | 
-    awk -F'"' '/href="[^"\/][^"\/]*\// {print $2}' | 
-    sed 's|/$||; s/%3A/:/g') ||
+    awk -F'"' '/href="[^"\/][^"\/]*\// && !/\.\.\// {print $2}' | 
+    sed 's|/$||; s/%20/ /g; s/%3A/:/g; s/%2F/\//g') ||
     error_exit "Failed to fetch available versions for $pretty_name"
 
     # Populate versions array safely
     local -a versions=()
-    while IFS= read -r -d $'\n' line; do
+    while IFS= read -r line; do
         [[ -n "$line" ]] && versions+=("$line")
-    done < <(printf "%s" "$image_names")
+    done <<< "$image_names"
     
     # Display available versions
     if [[ ${#versions[@]} -gt 0 ]]; then
