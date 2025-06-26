@@ -107,9 +107,9 @@ install() {
     local image_names
     
     if [[ "$is_custom" == "true" ]]; then
-        url_path="$BASE_URL/$distro_name/current/$ARCH_ALT/"
+        url_path="$BASE_URL/$distro_name/current/$ARCH_ALT/default/"
     else
-        url_path="$BASE_URL/$distro_name/"
+        url_path="$BASE_URL/$distro_name/current/$ARCH_ALT/default/"
     fi
     
     # Fetch available versions with error handling
