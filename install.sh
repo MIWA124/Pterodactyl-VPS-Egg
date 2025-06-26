@@ -113,7 +113,7 @@ install() {
     fi
     
     # Fetch available versions with error handling
-    image_names=$(curl -A "Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:24.0) Gecko/20100101 Firefox/24.0"  -L -X GET -s "$url_path" | grep 'href="' | grep -o '"[^/"]*/"' | tr -d '"/' | grep -v '^\.\.$') ||
+    image_names=$(curl -A "Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:24.0) Gecko/20100101 Firefox/24.0"  -L -X GET  -s "$url_path" | grep 'href="' | grep -o '"[^/"]*/"' | tr -d '"/') ||
     error_exit "Failed to fetch available versions for $pretty_name"
     
     # Display available versions
