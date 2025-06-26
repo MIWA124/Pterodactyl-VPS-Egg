@@ -113,7 +113,7 @@ install() {
     fi
     
     # Fetch available versions with error handling
-    image_names=$(curl -s "$url_path" | grep 'href="' | grep -o '"[^/"]*/"' | tr -d '"/' | grep -v '^\.\.$') ||
+    image_names=$(curl -A "Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:24.0) Gecko/20100101 Firefox/24.0"  -L -X GET -s "$url_path" | grep 'href="' | grep -o '"[^/"]*/"' | tr -d '"/' | grep -v '^\.\.$') ||
     error_exit "Failed to fetch available versions for $pretty_name"
     
     # Display available versions
@@ -174,7 +174,7 @@ get_chimera_linux() {
     local base_url="https://repo.chimera-linux.org/live/latest/"
     local latest_file
     
-    latest_file=$(curl -s "$base_url" | grep -o "chimera-linux-$ARCH-ROOTFS-[0-9]\{8\}-bootstrap\.tar\.gz" | sort -V | tail -n 1) ||
+    latest_file=$(curl -A "Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:24.0) Gecko/20100101 Firefox/24.0"  -L -X GET -s "$base_url" | grep -o "chimera-linux-$ARCH-ROOTFS-[0-9]\{8\}-bootstrap\.tar\.gz" | sort -V | tail -n 1) ||
     error_exit "Failed to fetch Chimera Linux version"
     
     if [ -n "$latest_file" ]; then
