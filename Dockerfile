@@ -18,7 +18,7 @@ RUN apt-get update && \
         bzip2 \
         sudo \
         locales \
-        awk \
+        original-awk \
         sed \
         adduser && \
     rm -rf /var/lib/apt/lists/*
