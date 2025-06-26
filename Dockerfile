@@ -18,6 +18,8 @@ RUN apt-get update && \
         bzip2 \
         sudo \
         locales \
+        awk \
+        sed \
         adduser && \
     rm -rf /var/lib/apt/lists/*
 
